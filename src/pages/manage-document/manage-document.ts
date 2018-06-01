@@ -22,7 +22,7 @@ export class ManageDocumentPage {
   
   private colecao		: string 	= 'teste-ortopedico';
   private docID     : string  = '';
-  private anatomias : any     = [];
+  public  anatomias : any     = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private fb: FormBuilder, private db: DatabaseProvider,
