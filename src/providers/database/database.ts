@@ -25,12 +25,12 @@ export class DatabaseProvider {
    * @param docID identificador do documento
    * @param entity A key / values do documento a serem adicionados
    */
-  createDocuments(_collection: string, docID: string, entity: any) : Promise<any> {
+  createDocuments(_collection: string, docID: string, entity: TesteOrtopedico) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.db
           .collection(_collection)
           .doc(docID)
-          .set(entity, { merge: true })
+          .set(Object.assign({}, entity), { merge: true })
           .then((entity: any) => {
             resolve(entity);
           })
@@ -49,17 +49,17 @@ export class DatabaseProvider {
       this.db.collection(_collection)
         .get()
         .then((querySnapshot) => {
-          let obj: any = [];
+          let testes: TesteOrtopedico[] = [];
           querySnapshot.forEach((doc: any) => {
-            obj.push({
-              id           : doc.id,
-              nome         : doc.data().nomeTeste,
-              procedimento : doc.data().procedimento,
-              ativo        : doc.data().ativo,
-              anatomia_id  : doc.data().ativo,
-            });
+            let teste          = new TesteOrtopedico();
+            teste.id           = doc.id;
+            teste.nome         = doc.data().nome;
+            teste.procedimento = doc.data().procedimento;
+            teste.ativo        = doc.data().ativo;
+            teste.anatomia_id  = doc.data().anatomia_id;
+            testes.push(teste);
           });
-          resolve(obj);
+          resolve(testes);
         })
         .catch((error: any) => {
           reject(error);
@@ -72,9 +72,10 @@ export class DatabaseProvider {
    * @param _collection Coleção no Firestore
    * @param entity A key / values do documento a serem adicionados
    */
-  addDocument(_collection: string, entity: any) : Promise<any> {
+  addDocument(_collection: string, entity: TesteOrtopedico) : Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(_collection).add(entity)
+      this.db.collection(_collection)
+        .add(Object.assign({}, entity))
         .then((obj: any) => {
           resolve(obj);
         })
@@ -110,12 +111,12 @@ export class DatabaseProvider {
    * @param docID Identificador do documento
    * @param entity A key / values do documento a serem adicionados
    */
-  updateDocument(_collection: string, docID: string, entity: any) : Promise<any> {
+  updateDocument(_collection: string, docID: string, entity: TesteOrtopedico) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.db
         .collection(_collection)
         .doc(docID)
-        .update(entity)
+        .update(Object.assign({}, entity))
         .then((obj: any) => {
           resolve(obj);
         })
@@ -124,4 +125,26 @@ export class DatabaseProvider {
         });
     });
   }
+  
+  private end: string = '../assets/anatomia.json'  
+  getAnatomia() {
+    return new Promise(resolve => {
+      this.http.get(this.end)
+      .subscribe(data => {
+        resolve(Object.keys(data).map(key => data[key]))
+      }, err => {
+        console.log(err);
+      })
+      
+    });
+  } 
+
+}
+
+export class TesteOrtopedico {
+  id?: string;
+  nome: string;
+  procedimento: string;
+  ativo: boolean;
+  anatomia_id: number; 
 }

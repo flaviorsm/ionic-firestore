@@ -9,3 +9,4 @@ $ ionic g page manage-document
 $ ionic g provider database  
 
 http://masteringionic.com/blog/2017-10-22-using-firebase-cloud-firestore-with-ionic/
+https://javebratt.com/crud-ionic-firestore/

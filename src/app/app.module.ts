@@ -7,7 +7,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DatabaseProvider } from '../providers/database/database';
-
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({

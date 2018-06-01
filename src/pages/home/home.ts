@@ -1,36 +1,29 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  
 import { NavController, AlertController } from 'ionic-angular';
-import { DatabaseProvider } from '../../providers/database/database';
-import { ManageDocumentPage } from '../manage-document/manage-document';
+import { DatabaseProvider, TesteOrtopedico } from '../../providers/database/database';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
 
   private colecao : string = "teste-ortopedico"
   private docID   : string = "Xy76Re34SdFR1"; 
 
   //Usado para armazenar / fornecer os dados do documento inicial para a coleta de banco de dados
-  private entity   : any;
+  private entity: TesteOrtopedico;
   //Propriedade para armazenar os documentos retornados da coleção de banco de dados
-  private models    : any; 
+  private models: any; 
   
-  constructor(public navCtrl: NavController, private db: DatabaseProvider, private alert: AlertController) {
-    this.entity = {
-      nome: '',
-      procedimento: '',
-      ativo: '',
-      anatomia_id: 0
-    };
-  }
+  constructor(public navCtrl: NavController, private db: DatabaseProvider, private alert: AlertController) {}
 
   ionViewDidEnter(){
-    this.retrieveCollection();
+    this.retrieveCollection();    
   }
 
-  generateCollectionAndDocument(): void {
+  generateCollectionAndDocument() {
     this.db.createDocuments(this.colecao, this.docID, this.entity)
       .then((data: any) =>{
         console.dir(data);
@@ -40,7 +33,7 @@ export class HomePage {
       });
   }
 
-  retrieveCollection() : void {
+  retrieveCollection() {
     this.db.getDocuments(this.colecao)
       .then((data) => {
         if(data.length === 0){
@@ -53,20 +46,20 @@ export class HomePage {
       .catch();
   }
 
-  addDocument() : void {
-    this.navCtrl.push(ManageDocumentPage)
+  addDocument() {
+    this.navCtrl.push('manage-document');
   }
 
-  updateDocument(obj) : void {
+  updateDocument(obj) {
     let params : any = {
       _collection: this.colecao,
       data: obj
     };
 
-    this.navCtrl.push(ManageDocumentPage, { record : params, isEdited : true });
+    this.navCtrl.push('manage-document', { record: params, isEdited: true });
   }
 
-  deleteDocument(obj) : void {
+  deleteDocument(obj: any) {
     this.db.deleteDocument(this.colecao, obj.id)
       .then((data: any) => {
         this.displayAlert('Sucesso', 'O teste ' + obj.nome + ' foi excluido com sucesso!');
