@@ -1,44 +1,46 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar hideBackButton class="header">
     <ion-title>
-      Cloud Firestore
+      <h6>Testes Ortopédicos</h6>
     </ion-title>
+    <ion-buttons left>
+        <button ion-button (click)="voltarPagina()">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="addTeste()">
+          <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <button
-      ion-button
-      block
-      color="primary"
-      (click)="addDocument()">
-   	  Adicionar
-   </button>
-
-   <ion-list>
-    <ion-item *ngFor="let model of models">
-      <h2>{{ model.nome }}</h2>
-      <p>
-          docID: {{ model.id }} <br>
-          Procedimento: {{ model.procedimento }}<br>
-          Anatomia Id: {{ model.anatomia_id }}<br>
-          Ativo: {{ model.ativo }}
-      </p>
-
-      <button
-         ion-button
-         color="secondary"
-         (click)="updateDocument(model)">
-          Atualizar
+<ion-content padding class="master">
+  <!-- <ion-searchbar (ionInput)="filtrarTeste($event)" [(ngModel)]="searchText" placeholder="Nome do teste"></ion-searchbar>     -->
+  <ion-list>    
+    <ion-list-header *ngIf="models.length > 0">Total: {{ models.length }}</ion-list-header>
+    <ion-item-sliding *ngFor="let model of models">      
+      <button ion-item (click)="editarTeste(model)">
+        <h2>{{ anatomias[model.anatomia_id].nome }}</h2>
+        <h3><b>Teste:</b> {{ model.nome }}</h3>
+        <p class="destaque"><b>Procedimento</b></p>
+        <p>{{ model.procedimento }}</p>        
       </button>
-      
-      <button
-         ion-button
-         color="danger"
-         (click)="deleteDocument(model)">
-         Deletar
-      </button>
-    </ion-item>
-</ion-list>
-
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="removerTeste(model)">
+          <ion-icon name="trash"></ion-icon>
+          Excluir
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>    
+    <ion-item>
+      &#169; 2018 - Fisioterapia Aplicada | v 1.0.2 
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

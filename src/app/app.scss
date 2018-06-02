@@ -14,3 +14,26 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.master {
+    background-color: color($colors, light);
+}
+
+.title {
+    color: color($colors, secondary);
+    text-align: center;
+}
+
+.header {
+    ion-icon{
+        color: color($colors, dark);
+        font-size: 20pt;
+    }
+}
+
+.footer {
+    ion-item{
+        font-size: 9pt;
+        text-align: center;
+        color: color($colors, tertiary)
+    }
+}

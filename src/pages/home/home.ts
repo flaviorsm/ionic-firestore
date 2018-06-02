@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';  
 import { NavController, AlertController } from 'ionic-angular';
 import { DatabaseProvider, TesteOrtopedico } from '../../providers/database/database';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -9,15 +10,18 @@ import { DatabaseProvider, TesteOrtopedico } from '../../providers/database/data
 
 export class HomePage {
 
-  private colecao : string = "teste-ortopedico"
-  private docID   : string = "Xy76Re34SdFR1"; 
+  models    : any = []
+  anatomias : any = [];
 
-  //Usado para armazenar / fornecer os dados do documento inicial para a coleta de banco de dados
-  private entity: TesteOrtopedico;
-  //Propriedade para armazenar os documentos retornados da coleção de banco de dados
-  private models: any; 
+  colecao   : string = "teste-ortopedico"
+  docID     : string = "Xy76Re34SdFR1"; 
+  entity    : TesteOrtopedico;
   
-  constructor(public navCtrl: NavController, private db: DatabaseProvider, private alert: AlertController) {}
+  constructor(public navCtrl: NavController, private db: DatabaseProvider, private alert: AlertController) {
+    this.db.getAnatomia().then(data => {
+      this.anatomias = data;
+    });
+  }
 
   ionViewDidEnter(){
     this.retrieveCollection();    
@@ -34,32 +38,21 @@ export class HomePage {
   }
 
   retrieveCollection() {
+    this.models = [];
     this.db.getDocuments(this.colecao)
       .then((data) => {
-        if(data.length === 0){
-          this.generateCollectionAndDocument();
+        if(data.length > 0) {
+          this.models = data; 
         }
         else {
-          this.models = data;
+          //this.generateCollectionAndDocument();
         }
       })
       .catch();
   }
 
-  addDocument() {
-    this.navCtrl.push('manage-document');
-  }
 
-  updateDocument(obj) {
-    let params : any = {
-      _collection: this.colecao,
-      data: obj
-    };
-
-    this.navCtrl.push('manage-document', { record: params, isEdited: true });
-  }
-
-  deleteDocument(obj: any) {
+  removerTeste(obj: TesteOrtopedico) {
     this.db.deleteDocument(this.colecao, obj.id)
       .then((data: any) => {
         this.displayAlert('Sucesso', 'O teste ' + obj.nome + ' foi excluido com sucesso!');
@@ -81,5 +74,22 @@ export class HomePage {
       }]
     });
     _alert.present();
+  }
+
+  voltarPagina() {
+    this.navCtrl.push(LoginPage);
+  }
+  
+  addTeste() {
+    this.navCtrl.push('manage-document');
+  }
+
+  editarTeste(obj: TesteOrtopedico) {
+    let params : any = {
+      _collection: this.colecao,
+      data: obj
+    };
+
+    this.navCtrl.push('manage-document', { record: params, isEdited: true });
   }
 }
