@@ -10,6 +10,9 @@ $ npm install promise-polyfill --save-exact
 ### Login
 $ npm install firebase angularfire2 --save
 
+### Plugin versão
+https://ionicframework.com/docs/native/app-version/
+
 
 ### Configuração
 $ ionic g page manage-document  

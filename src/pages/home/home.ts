@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';  
 import { NavController, AlertController } from 'ionic-angular';
 import { DatabaseProvider, TesteOrtopedico } from '../../providers/database/database';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -37,13 +38,14 @@ export class HomePage {
   }
 
   retrieveCollection() {
+    this.models = [];
     this.db.getDocuments(this.colecao)
       .then((data) => {
-        if(data.length === 0){
-          this.generateCollectionAndDocument();
+        if(data.length > 0) {
+          this.models = data; 
         }
         else {
-          this.models = data;
+          //this.generateCollectionAndDocument();
         }
       })
       .catch();
@@ -74,8 +76,8 @@ export class HomePage {
     _alert.present();
   }
 
-  backHome() {
-    this.navCtrl.push(HomePage);
+  voltarPagina() {
+    this.navCtrl.push(LoginPage);
   }
   
   addTeste() {

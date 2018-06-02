@@ -16,7 +16,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="master">
   <form
       [formGroup]="form"
       (ngSubmit)="saveTeste(form.value)">
@@ -38,10 +38,10 @@
 
       <ion-item>
          <ion-label stacked>Procedimento:</ion-label>
-         <ion-input
+         <ion-textarea
             type="text"
             formControlName="procedimento"
-            [(ngModel)]="teste.procedimento"></ion-input>
+            [(ngModel)]="teste.procedimento"></ion-textarea>
    	  </ion-item>
 
       <ion-item>
@@ -73,3 +73,11 @@
 
    </form>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>    
+      <ion-item>
+        &#169; 2018 - Fisioterapia Aplicada | v 1.0.2 
+      </ion-item>
+    </ion-toolbar>
+</ion-footer>

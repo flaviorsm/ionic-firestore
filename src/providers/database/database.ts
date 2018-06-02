@@ -126,7 +126,7 @@ export class DatabaseProvider {
     });
   }
   
-  private end: string = '../assets/anatomia.json'  
+  private end: string = './assets/json/anatomia.json';
   getAnatomia() {
     return new Promise(resolve => {
       this.http.get(this.end)

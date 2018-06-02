@@ -4,7 +4,7 @@
       <h6>Testes Ortopédicos</h6>
     </ion-title>
     <ion-buttons left>
-        <button ion-button (click)="backHome()">
+        <button ion-button (click)="voltarPagina()">
           <ion-icon name="ios-arrow-back"></ion-icon>
         </button>
       </ion-buttons>
@@ -16,7 +16,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="master">
   <!-- <ion-searchbar (ionInput)="filtrarTeste($event)" [(ngModel)]="searchText" placeholder="Nome do teste"></ion-searchbar>     -->
   <ion-list>    
     <ion-list-header *ngIf="models.length > 0">Total: {{ models.length }}</ion-list-header>
@@ -40,53 +40,7 @@
 <ion-footer>
   <ion-toolbar>    
     <ion-item>
-        <!-- <ion-label color="secondary">{{ onlyInactive ? 'Listar Ativos' : 'Listar Inativos' }}</ion-label>
-        <ion-toggle checked="true" [(ngModel)]="onlyInactive" (ionChange)="obterTestes()"></ion-toggle> -->
-      </ion-item>
+      &#169; 2018 - Fisioterapia Aplicada | v 1.0.2 
+    </ion-item>
   </ion-toolbar>
 </ion-footer>
-
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Cloud Firestore
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-  <button
-      ion-button
-      block
-      color="primary"
-      (click)="addDocument()">
-   	  Adicionar
-   </button>
-
-   <ion-list>
-    <ion-item *ngFor="let model of models">
-      <h2>{{ model.nome }}</h2>
-      <p>
-          docID: {{ model.id }} <br>
-          Procedimento: {{ model.procedimento }}<br>
-          Anatomia Id: {{ model.anatomia_id }}<br>
-          Ativo: {{ model.ativo }}
-      </p>
-
-      <button
-         ion-button
-         color="secondary"
-         (click)="updateDocument(model)">
-          Atualizar
-      </button>
-      
-      <button
-         ion-button
-         color="danger"
-         (click)="deleteDocument(model)">
-         Deletar
-      </button>
-    </ion-item>
-</ion-list>
-
-</ion-content> -->
