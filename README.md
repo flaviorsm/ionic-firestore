@@ -2,10 +2,16 @@
 CRUD com Ionic + Firestore
 
 ## Configuração e inicialização
+
+### Vincular ao Firebase
 $ npm install --save firebase
 $ npm install promise-polyfill --save-exact  
 
+### Login
+$ npm install firebase angularfire2 --save
+
+
+### Configuração
 $ ionic g page manage-document  
 $ ionic g provider database  
-
-http://masteringionic.com/blog/2017-10-22-using-firebase-cloud-firestore-with-ionic/
+$ ionic g page login

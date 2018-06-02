@@ -1,4 +1,52 @@
 <ion-header>
+  <ion-navbar hideBackButton class="header">
+    <ion-title>
+      <h6>Testes Ortopédicos</h6>
+    </ion-title>
+    <ion-buttons left>
+        <button ion-button (click)="backHome()">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="addTeste()">
+          <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- <ion-searchbar (ionInput)="filtrarTeste($event)" [(ngModel)]="searchText" placeholder="Nome do teste"></ion-searchbar>     -->
+  <ion-list>    
+    <ion-list-header *ngIf="models.length > 0">Total: {{ models.length }}</ion-list-header>
+    <ion-item-sliding *ngFor="let model of models">      
+      <button ion-item (click)="editarTeste(model)">
+        <h2>{{ anatomias[model.anatomia_id].nome }}</h2>
+        <h3><b>Teste:</b> {{ model.nome }}</h3>
+        <p class="destaque"><b>Procedimento</b></p>
+        <p>{{ model.procedimento }}</p>        
+      </button>
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="removerTeste(model)">
+          <ion-icon name="trash"></ion-icon>
+          Excluir
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>    
+    <ion-item>
+        <!-- <ion-label color="secondary">{{ onlyInactive ? 'Listar Ativos' : 'Listar Inativos' }}</ion-label>
+        <ion-toggle checked="true" [(ngModel)]="onlyInactive" (ionChange)="obterTestes()"></ion-toggle> -->
+      </ion-item>
+  </ion-toolbar>
+</ion-footer>
+
+<!-- <ion-header>
   <ion-navbar>
     <ion-title>
       Cloud Firestore
@@ -41,4 +89,4 @@
     </ion-item>
 </ion-list>
 
-</ion-content>
+</ion-content> -->
