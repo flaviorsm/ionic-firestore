@@ -20,7 +20,18 @@ export class MyApp {
       splashScreen.hide();
     });
 
-    firebase.initializeApp(environment.firebase);
+    firebase.firestore().enablePersistence()
+      .then(() => {
+        firebase.initializeApp(environment.firebase);
+      })
+      .catch((err) => {
+        if (err.code == 'failed-precondition') {
+          console.log('Falha pré-condição' + err);
+        } else if (err.code == 'unimplemented') {
+          console.log('Não implementado' + err);;
+        }
+      });
+    
   }
 }
 
