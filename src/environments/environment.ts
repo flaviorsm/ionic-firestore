@@ -1,11 +1,11 @@
 export const environment = {
     production: false,
     firebase : {
-        apiKey: "AIzaSyCDxaG0dknIfaoWTmO7Iy7WzBCZoFuPK8s",
-        authDomain: "fisioterapia-aplicada.firebaseapp.com",
-        databaseURL: "https://fisioterapia-aplicada.firebaseio.com",
-        projectId: "fisioterapia-aplicada",
-        storageBucket: "fisioterapia-aplicada.appspot.com",
-        messagingSenderId: "858806391323"
+      apiKey: '### FIREBASE API KEY ###',
+      authDomain: '### FIREBASE AUTH DOMAIN ###',
+      projectId: '### CLOUD FIRESTORE PROJECT ID ###',                    
+      databaseURL: "###",
+      storageBucket: "####",
+      messagingSenderId: "######"
     }
  };
