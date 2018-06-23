@@ -22,10 +22,10 @@
     <ion-list-header *ngIf="models.length > 0">Total: {{ models.length }}</ion-list-header>
     <ion-item-sliding *ngFor="let model of models">      
       <button ion-item (click)="editarTeste(model)">
-        <h2>{{ anatomias[model.anatomia_id].nome }}</h2>
+        <h2>{{ anatomias[model.anatomia_id - 1].nome }}</h2>
         <h3><b>Teste:</b> {{ model.nome }}</h3>
-        <p class="destaque"><b>Procedimento</b></p>
-        <p>{{ model.procedimento }}</p>        
+        <p><span class="destaque"><b>Procedimento:</b></span> {{ model.procedimento }}</p>
+        <p><span class="destaque"><b>Resultado:</b></span> {{ model.resultado }}</p>        
       </button>
       <ion-item-options side="left">
         <button ion-button color="danger" (click)="removerTeste(model)">
@@ -40,7 +40,8 @@
 <ion-footer>
   <ion-toolbar>    
     <ion-item>
-      &#169; 2018 - Fisioterapia Aplicada | v 1.0.2 
+      &#169; 2018 - Fisioterapia Aplicada | v 1.1.0 
+      
     </ion-item>
   </ion-toolbar>
 </ion-footer>

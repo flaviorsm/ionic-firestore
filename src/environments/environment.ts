@@ -6,6 +6,7 @@ export const environment = {
         databaseURL: "https://fisioterapia-aplicada.firebaseio.com",
         projectId: "fisioterapia-aplicada",
         storageBucket: "fisioterapia-aplicada.appspot.com",
-        messagingSenderId: "858806391323"
+        messagingSenderId: "858806391323",
+        timestampsInSnapshots: true
     }
  };

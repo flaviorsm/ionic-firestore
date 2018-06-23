@@ -13,7 +13,6 @@ export class HomePage {
   models    : any = []
   anatomias : any = [];
 
-  colecao   : string = "teste-ortopedico"
   docID     : string = "Xy76Re34SdFR1"; 
   entity    : TesteOrtopedico;
   
@@ -24,11 +23,17 @@ export class HomePage {
   }
 
   ionViewDidEnter(){
-    this.retrieveCollection();    
+    this.retrieveCollection();  
   }
 
   generateCollectionAndDocument() {
-    this.db.createDocuments(this.colecao, this.docID, this.entity)
+    this.entity = new TesteOrtopedico();
+    this.entity.nome = 'Teste Dev';
+    this.entity.procedimento = 'Procedimento dev';
+    this.entity.ativo = false;
+    this.entity.anatomia_id = 1;
+
+    this.db.createDocuments(this.docID, this.entity)
       .then((data: any) =>{
         console.dir(data);
       })
@@ -39,13 +44,13 @@ export class HomePage {
 
   retrieveCollection() {
     this.models = [];
-    this.db.getDocuments(this.colecao)
+    this.db.getDocuments()
       .then((data) => {
         if(data.length > 0) {
           this.models = data; 
         }
         else {
-          //this.generateCollectionAndDocument();
+          this.generateCollectionAndDocument();
         }
       })
       .catch();
@@ -53,7 +58,7 @@ export class HomePage {
 
 
   removerTeste(obj: TesteOrtopedico) {
-    this.db.deleteDocument(this.colecao, obj.id)
+    this.db.deleteDocument(obj.id)
       .then((data: any) => {
         this.displayAlert('Sucesso', 'O teste ' + obj.nome + ' foi excluido com sucesso!');
       })
@@ -86,7 +91,6 @@ export class HomePage {
 
   editarTeste(obj: TesteOrtopedico) {
     let params : any = {
-      _collection: this.colecao,
       data: obj
     };
 

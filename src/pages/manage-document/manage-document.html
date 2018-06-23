@@ -23,7 +23,7 @@
 
       <ion-item>
           <ion-label stacked>Anatomia</ion-label>
-          <ion-select formControlName="anatomia_id" [(ngModel)]="teste.anatomia_id">
+          <ion-select formControlName="anatomia_id" [(ngModel)]="teste.anatomia_id" placeholder="Selecione">
               <ion-option *ngFor="let anatomia of anatomias" value="{{ anatomia.id }}">{{ anatomia.nome }}</ion-option>
           </ion-select>
         </ion-item>
@@ -39,10 +39,16 @@
       <ion-item>
          <ion-label stacked>Procedimento:</ion-label>
          <ion-textarea
-            type="text"
             formControlName="procedimento"
             [(ngModel)]="teste.procedimento"></ion-textarea>
-   	  </ion-item>
+       </ion-item>
+       
+       <ion-item>
+        <ion-label stacked>Resultado:</ion-label>
+        <ion-textarea
+           formControlName="resultado"
+           [(ngModel)]="teste.resultado"></ion-textarea>
+      </ion-item>
 
       <ion-item>
          <ion-label stacked>Ativo</ion-label>
@@ -77,7 +83,7 @@
 <ion-footer>
     <ion-toolbar>    
       <ion-item>
-        &#169; 2018 - Fisioterapia Aplicada | v 1.0.2 
+        &#169; 2018 - Fisioterapia Aplicada | v 1.1.0 
       </ion-item>
     </ion-toolbar>
 </ion-footer>

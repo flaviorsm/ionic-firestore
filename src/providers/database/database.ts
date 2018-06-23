@@ -9,7 +9,9 @@ import 'firebase/firestore';
 @Injectable()
 export class DatabaseProvider {
 
-  private db : any;
+  private  db      : any;
+  readonly colecao : string = "teste-ortopedico";
+  readonly pathJson: string = './assets/json/anatomia.json';
 
   constructor(public http: HttpClient) {
     this.db = firebase.firestore();
@@ -21,14 +23,13 @@ export class DatabaseProvider {
    * não seja recriada repetidamente caso este método seja chamado novamente
    * @public
    * @method createDocuments
-   * @param _collection Coleção no Firestore que irá criar
    * @param docID identificador do documento
    * @param entity A key / values do documento a serem adicionados
    */
-  createDocuments(_collection: string, docID: string, entity: TesteOrtopedico) : Promise<any> {
+  createDocuments(docID: string, entity: TesteOrtopedico) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.db
-          .collection(_collection)
+          .collection(this.colecao)
           .doc(docID)
           .set(Object.assign({}, entity), { merge: true })
           .then((entity: any) => {
@@ -42,11 +43,10 @@ export class DatabaseProvider {
 
   /**
    * Retorna documentos da coleção de banco de dados específica
-   * @param _collection Coleção no Firestore
    */
-  getDocuments(_collection: string) : Promise<any> {
+  getDocuments() : Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(_collection)
+      this.db.collection(this.colecao)
         .get()
         .then((querySnapshot) => {
           let testes: TesteOrtopedico[] = [];
@@ -57,6 +57,7 @@ export class DatabaseProvider {
             teste.procedimento = doc.data().procedimento;
             teste.ativo        = doc.data().ativo;
             teste.anatomia_id  = doc.data().anatomia_id;
+            teste.resultado    = doc.data().resultado;
             testes.push(teste);
           });
           resolve(testes);
@@ -69,12 +70,11 @@ export class DatabaseProvider {
 
   /**
    * Adiciona novo documento a coleção
-   * @param _collection Coleção no Firestore
    * @param entity A key / values do documento a serem adicionados
    */
-  addDocument(_collection: string, entity: TesteOrtopedico) : Promise<any> {
+  addDocument(entity: TesteOrtopedico) : Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(_collection)
+      this.db.collection(this.colecao)
         .add(Object.assign({}, entity))
         .then((obj: any) => {
           resolve(obj);
@@ -87,13 +87,12 @@ export class DatabaseProvider {
 
   /**
    * Deleta documento por id na coleção
-   * @param _collection Coleção no Firestore 
    * @param docID Identificador do documento
    */
-  deleteDocument(_collection: string, docID: string) : Promise<any> {
+  deleteDocument(docID: string) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.db
-        .collection(_collection)
+        .collection(this.colecao)
         .doc(docID)
         .delete()
         .then((obj: any) => {
@@ -107,14 +106,13 @@ export class DatabaseProvider {
 
   /**
    * 
-   * @param _collection Coleção no Firestore
    * @param docID Identificador do documento
    * @param entity A key / values do documento a serem adicionados
    */
-  updateDocument(_collection: string, docID: string, entity: TesteOrtopedico) : Promise<any> {
+  updateDocument(docID: string, entity: TesteOrtopedico) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.db
-        .collection(_collection)
+        .collection(this.colecao)
         .doc(docID)
         .update(Object.assign({}, entity))
         .then((obj: any) => {
@@ -125,11 +123,10 @@ export class DatabaseProvider {
         });
     });
   }
-  
-  private end: string = './assets/json/anatomia.json';
+    
   getAnatomia() {
     return new Promise(resolve => {
-      this.http.get(this.end)
+      this.http.get(this.pathJson)
       .subscribe(data => {
         resolve(Object.keys(data).map(key => data[key]))
       }, err => {
@@ -142,9 +139,10 @@ export class DatabaseProvider {
 }
 
 export class TesteOrtopedico {
-  id?: string;
-  nome: string;
+  id?         : string;
+  nome        : string;
   procedimento: string;
-  ativo: boolean;
-  anatomia_id: number; 
+  ativo       : boolean;
+  anatomia_id : number; 
+  resultado?  : string; 
 }
